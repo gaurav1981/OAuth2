@@ -52,6 +52,9 @@ let oauth2 = OAuth2CodeGrant(settings: [
 See those `redirect_uris`?
 You can use the scheme you want, but you must **a)** declare the scheme you use in your `Info.plist` and **b)** register the very same URI on the website you connect to.
 
+Note that **as of iOS 9**, you _should_ use [Universal Links](https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html) as your redirect URL, rather than a custom app scheme.
+This prevents others from re-using your URI scheme and intercept the authorization flow.
+
 Want to avoid switching to Safari and pop up a SafariViewController or NSPanel?
 Set this:
 
@@ -375,7 +378,7 @@ Some sites also want the client-id/secret combination in the request _body_, not
 Sometimes you also need to provide additional authorization parameters.
 This can be done in 3 ways:
 
-    oauth2.clientConfig.authParameters = ["duration": "permanent"]
+    oauth2.authParameters = ["duration": "permanent"]
     // or in your settings:
     "parameters": ["duration": "permanent"]
     // or when you authorize manually:
